@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>关于 | znzcqy的博客</title>
+<title>计算n阶行列式的值 | znzcqy的博客</title>
 <meta name="description" content="//这是一行注释">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -102,14 +102,67 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">关于</h2>
-            <div class="post-date">2019-01-25</div>
+            <h2 class="post-title">计算n阶行列式的值</h2>
+            <div class="post-date">2019-09-23</div>
             
             <div class="post-content">
-              <p>这是关于的页面，可以在这里向世界介绍你！</p>
+              <p>首先说明一下为啥要写这篇博客，首先，大二生活刚开始，有点空闲时间，线性代数刚学了行列式，借此机会复习一下（手动滑稽）。还有就是一位朋友说我整天净搞些花里胡哨的，不如搞点实际的，其实就是想让我写一个程序帮她计算行列式的值（我知道你是开玩笑的，但我当真了，哈哈哈哈嗝）。</p>
+<p>好的，计算行列式的方法相信大家都会，这里使用按行（列）展开（降阶法），不要问我为啥不用定义算，因为不会……</p>
+<p>为了简化代码，这里只用第一列展开的结果，当然用任意列（行）步骤和结果都是一样的哈。那么就附上代码：</p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;math.h&gt;
+#define N 10
+int Det(int n, int a[N][N])//Det为行列式的简称，函数的作用是计算n阶行列式的值
+{
+  int b[N][N]={0},i,j,k,sign=0,cnt=0;//定义二维数组b，用来存放行列式的每一个元素；sign用来判断移动方向，cnt用来计算行列式的值
+  if(n==1)
+    return a[0][0];
+  for(i=0;i&lt;n;i++)//将第一列元素的余子式存入二维数组b中
+  {
+    for(k=0;k&lt;n-1;k++)
+    {
+        for(j=0;j&lt;n-1;j++)
+        {
+          if (k&lt;i)//a[k][j]位于第i行的上方，只需将a[k][j]中的元素依次右移
+              sign=0;
+          else //a[k][j]位于第i行或其下方，则需进行右移和下移
+              sign=1;
+          b[k][j]=a[k+sign][j+1];//执行移动操作，实现余子式的存储
+        }
+    }
+    cnt+=a[i][0]*Det(n-1,b)*pow(-1,i);//余子式的系数为-1的i+j次方，而j=0；使用递归，将第一列元素的代数余子式之和存入cnt，cnt的值即为行列式的值
+  }
+  return cnt;//函数的返回值cnt即为n阶行列式的值
+}
+int main(void)
+{
+  int i,j,n=0,a[N][N]={0}; 
+  scanf(&quot;%d&quot;,&amp;n);
+  while(n&gt;0)//n的值必须大于0
+  {
+    for(i=0;i&lt;n;i++)
+      for(j=0;j&lt;n;j++)
+        scanf(&quot;%d&quot;,&amp;a[i][j]);//读入行列式
+    printf(&quot;%d\n&quot;,Det(n,a));//输出行列式的值
+    scanf(&quot;%d&quot;,&amp;n);//可以连续计算多个行列式的值，直到n&lt;=0时结束程序
+  }
+}
+</code></pre>
+<p>最后贴上一张图片，成功水完一篇博客
+<img src="https://znzcqy.github.io/post-images/1569241435585.png" alt=""></p>
 
             </div>
             
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://znzcqy.github.io/post/luo-gu-p1308-tong-ji-dan-ci-shu">
+                  <h3 class="post-title">
+                    洛谷P1308 统计单词数
+                  </h3>
+                </a>
+              </div>
             
 
             
