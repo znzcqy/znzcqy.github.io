@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>计算n阶行列式的值 | znzcqy的博客</title>
+<title>使用命令行下载网页视频（进阶版） | znzcqy的博客</title>
 <meta name="description" content="//这是一行注释">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -102,67 +102,37 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">计算n阶行列式的值</h2>
-            <div class="post-date">2019-09-23</div>
+            <h2 class="post-title">使用命令行下载网页视频（进阶版）</h2>
+            <div class="post-date">2019-11-08</div>
             
-              <div class="feature-container" style="background-image: url('https://znzcqy.github.io/post-images/iT8p60rqX.jpg')">
+              <div class="feature-container" style="background-image: url('https://znzcqy.github.io/post-images/wTokxzWiO.jpg')">
               </div>
             
             <div class="post-content">
-              <p>首先说明一下为啥要写这篇博客，首先，大二生活刚开始，有点空闲时间，线性代数刚学完行列式，借此机会复习一下（手动滑稽）。还有就是一位朋友说我整天净搞些花里胡哨的，不如搞点实际的，其实就是想让我写一个程序帮她计算行列式的值（我知道你是开玩笑的，但我当真了，哈哈哈哈哈嗝）。</p>
-<p>好的，计算行列式的方法相信大家都会，这里使用按行（列）展开（降阶法），不要问我为啥不用定义算，因为不会……</p>
-<p>为了简化代码，这里只用第一列展开的结果，当然用任意列（行）步骤和结果都是一样的哈。那么就附上代码：</p>
-<pre><code>#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;math.h&gt;
-#define N 10
-int Det(int n, int a[N][N])//Det为行列式的简称，函数的作用是计算n阶行列式的值
-{
-  int b[N][N]={0},i,j,k,sign=0,cnt=0;//定义二维数组b，用来存放行列式的每一个元素；sign用来判断移动方向，cnt用来计算行列式的值
-  if(n==1)
-    return a[0][0];
-  for(i=0;i&lt;n;i++)//将第一列元素的余子式存入二维数组b中
-  {
-    for(k=0;k&lt;n-1;k++)
-    {
-        for(j=0;j&lt;n-1;j++)
-        {
-          if (k&lt;i)//a[k][j]位于第i行的上方，只需将a[k][j]中的元素依次右移
-              sign=0;
-          else //a[k][j]位于第i行或其下方，则需进行右移和下移
-              sign=1;
-          b[k][j]=a[k+sign][j+1];//执行移动操作，实现余子式的存储
-        }
-    }
-    cnt+=a[i][0]*Det(n-1,b)*pow(-1,i);//余子式的系数为-1的i+j次方，而j=0；使用递归，将第一列元素的代数余子式之和存入cnt，cnt的值即为行列式的值
-  }
-  return cnt;//函数的返回值cnt即为n阶行列式的值
-}
-int main(void)
-{
-  int i,j,n=0,a[N][N]={0}; 
-  scanf(&quot;%d&quot;,&amp;n);
-  while(n&gt;0)//n的值必须大于0
-  {
-    for(i=0;i&lt;n;i++)
-      for(j=0;j&lt;n;j++)
-        scanf(&quot;%d&quot;,&amp;a[i][j]);//读入行列式
-    printf(&quot;%d\n&quot;,Det(n,a));//输出行列式的值
-    scanf(&quot;%d&quot;,&amp;n);//可以连续计算多个行列式的值，直到n&lt;=0时结束程序
-  }
-}
-</code></pre>
-<p>最后贴上一张图片，成功水完一篇博客<br>
-<img src="https://znzcqy.github.io/post-images/1569241435585.png" alt=""></p>
+              <p>之前写了关于you-get包的使用，由于挖了个youtube-dl的坑，在这里填上。同样是利用命令行下载网页视频，youtube-dl和you-get的使用方法大致相同，只是youtube-dl多了下载格式的选项。</p>
+<p>那么首先找到需要下载的网页或者视频地址，复制到剪切板。按windows徽标键，输入cmd，打开命令行。如果没有安装，可以直接输入pip install youtube-dl安装，或者输入python -m pip install --upgrade youtube-dl进行更新。<br>
+<img src="https://znzcqy.github.io/post-images/1573210456410.png" alt=""><br>
+安装完成后，直接在命令行输入youtube-dl -F 视频地址，这里我们选择VOA的一个慢速新闻，地址是https://www.voanews.com/episode/film-joker-raises-concerns-violence-4053531，新闻的标题是Film 'Joker' Raises Concerns of Violence，即电影《小丑》引发对暴力犯罪的担忧。（我曾用这个素材做过英语作业的news report）<br>
+<img src="https://znzcqy.github.io/post-images/1573211098585.png" alt=""><br>
+直接在命令行输入youtube-dl -F https://www.voanews.com/episode/film-joker-raises-concerns-violence-4053531<br>
+<img src="https://znzcqy.github.io/post-images/1573210852329.png" alt=""><br>
+这时会出来一行目录，输入youtube-dl -f mp4-455 https://www.voanews.com/episode/film-joker-raises-concerns-violence-4053531<br>
+然而由于网络问题，下载失败了<br>
+<img src="https://znzcqy.github.io/post-images/1573211589998.png" alt=""><br>
+我们换一个网址<br>
+<img src="https://znzcqy.github.io/post-images/1573212911686.png" alt=""><br>
+必须是视频+音频格式<br>
+由于某种不知名的原因，更新之后的youtube-dl识别了不了B站的视频格式了，所以推荐大家使用you-get。<br>
+文章中有任何不对的地方，敬请各位大佬批评指正，我会尽快修改。</p>
 
             </div>
             
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://znzcqy.github.io/post/luo-gu-p1308-tong-ji-dan-ci-shu">
+                <a href="https://znzcqy.github.io/post/utdZBq2Gb">
                   <h3 class="post-title">
-                    洛谷P1308 统计单词数
+                    如何利用you-get包下载网页上的视频
                   </h3>
                 </a>
               </div>
