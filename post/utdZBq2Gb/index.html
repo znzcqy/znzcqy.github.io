@@ -1,15 +1,18 @@
+
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" >
+    
+<meta charset="utf-8" >
 
 <title>如何利用you-get包下载网页上的视频 | znzcqy的博客</title>
 <meta name="description" content="//这是一行注释">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://znzcqy.github.io/favicon.ico?v=1580781039427">
+<link rel="shortcut icon" href="https://znzcqy.github.io/favicon.ico?v=1580787966079">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://znzcqy.github.io/styles/main.css">
 
@@ -24,93 +27,75 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-
 
 
   </head>
   <body>
     <div id="app" class="main">
-
-      <div class="sidebar" :class="{ 'full-height': menuVisible }">
-    
-  <div class="top-container" data-aos="fade-right">
-    <div class="top-header-container">
-      <a class="site-title-container" href="https://znzcqy.github.io">
-        <img src="https://znzcqy.github.io/images/avatar.png?v=1580781039427" class="site-logo">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://znzcqy.github.io">
+        <img class="avatar" src="https://znzcqy.github.io/images/avatar.png?v=1580787966079" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://znzcqy.github.io">
         <h1 class="site-title">znzcqy的博客</h1>
       </a>
-      <div class="menu-btn" @click="menuVisible = !menuVisible">
-        <div class="line"></div>
-      </div>
     </div>
-    <div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
       
         
-          <a href="/" class="site-nav">
+          <a href="/" class="menu purple-link">
             首页
           </a>
         
       
         
-          <a href="/archives" class="site-nav">
+          <a href="/archives" class="menu purple-link">
             归档
           </a>
         
       
         
-          <a href="/tags" class="site-nav">
+          <a href="/tags" class="menu purple-link">
             标签
           </a>
         
       
         
-          <a href="/post/about" class="site-nav">
+          <a href="/post/about" class="menu purple-link">
             关于
           </a>
         
       
     </div>
   </div>
-  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
-    <div class="social-container">
-      
-        
-          <a class="social-link" href="https://github.com/znzcqy" target="_blank">
-            <i class="fab fa-github"></i>
-          </a>
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    </div>
-    <div class="site-description">
-      //这是一行注释
-    </div>
-    <div class="site-footer">
-      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://znzcqy.github.io/atom.xml" target="_blank">RSS</a>
-    </div>
-  </div>
-<
+</transition>
 
 
-      <div class="main-container">
-        <div class="content-container" data-aos="fade-up">
-          <div class="post-detail">
-            <h2 class="post-title">如何利用you-get包下载网页上的视频</h2>
-            <div class="post-date">2019-10-26</div>
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://znzcqy.github.io/post-images/utdZBq2Gb.jpg')">
+            </div>
+          
+          <h2 class="post-title">如何利用you-get包下载网页上的视频</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2019-10-26</span>
             
-              <div class="feature-container" style="background-image: url('https://znzcqy.github.io/post-images/utdZBq2Gb.jpg')">
-              </div>
-            
-            <div class="post-content">
-              <p>大家在社团工作或者日常生活中经常看到比较好看的视频，想要下载下来，但是有的网页并不提供下载，那么如何方便快捷的下载网页中出现的视频呢，这里提供python中的一个包you-get（youtube-dl可以获得更多下载选项）来演示。<br>
+          </div>
+          <div class="post-content">
+            <p>大家在社团工作或者日常生活中经常看到比较好看的视频，想要下载下来，但是有的网页并不提供下载，那么如何方便快捷的下载网页中出现的视频呢，这里提供python中的一个包you-get（youtube-dl可以获得更多下载选项）来演示。<br>
 首先要确保你的电脑已经安装了python3.7，并且已经添加了环境变量，检验方法：win+R，输入cmd，打开命令提示符，输入python，这时会显示：<br>
 <img src="https://znzcqy.github.io/post-images/1572088251114.png" alt=""><br>
 然后利用pip安装you-get包，在命令行输入pip install you-get<br>
@@ -126,38 +111,49 @@ https://www.bilibili.com/video/av71572166<br>
 写在结尾：最近大幅降温，大家要注意身体，谨防感冒。<br>
 &lt;by //这是一行注释/&gt;</p>
 
-            </div>
-            
-            
-              <div class="next-post">
-                <div class="next">下一篇</div>
-                <a href="https://znzcqy.github.io/post/iT8p60rqX">
-                  <h3 class="post-title">
-                    计算n阶行列式的值
-                  </h3>
-                </a>
-              </div>
-            
-
-            
-              
-                <div id="gitalk-container" data-aos="fade-in"></div>
-              
-
-              
-            
-
           </div>
-
         </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://znzcqy.github.io/post/iT8p60rqX">
+              <h3 class="post-title">
+                下一篇：计算n阶行列式的值
+              </h3>
+            </a>
+          </div>
+          
       </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">//这是一行注释</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://znzcqy.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
     </div>
-
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-
-<script type="application/javascript">
-
-AOS.init();
+    <script type="application/javascript">
 
 hljs.initHighlightingOnLoad()
 
