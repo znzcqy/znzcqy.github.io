@@ -1,18 +1,15 @@
-
 <!DOCTYPE html>
 <html>
   <head>
-    
-<meta charset="utf-8" >
+    <meta charset="utf-8" >
 
 <title>计算n阶行列式的值 | znzcqy的博客</title>
 <meta name="description" content="//这是一行注释">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://znzcqy.github.io/favicon.ico?v=1580787966079">
+<link rel="shortcut icon" href="https://znzcqy.github.io/favicon.ico?v=1580788019338">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://znzcqy.github.io/styles/main.css">
 
@@ -27,75 +24,93 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
 
 
   </head>
   <body>
     <div id="app" class="main">
-      <div class="site-header-container">
-  <div class="site-header">
-    <div class="left">
-      <a href="https://znzcqy.github.io">
-        <img class="avatar" src="https://znzcqy.github.io/images/avatar.png?v=1580787966079" alt="" width="32px" height="32px">
-      </a>
-      <a href="https://znzcqy.github.io">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+    
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://znzcqy.github.io">
+        <img src="https://znzcqy.github.io/images/avatar.png?v=1580788019338" class="site-logo">
         <h1 class="site-title">znzcqy的博客</h1>
       </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
     </div>
-    <div class="right">
-      <transition name="fade">
-        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
-      </transition>
-    </div>
-  </div>
-</div>
-
-<transition name="fade">
-  <div class="menu-container" style="display: none;" v-show="menuVisible">
-    <div class="menu-list">
+    <div>
       
         
-          <a href="/" class="menu purple-link">
+          <a href="/" class="site-nav">
             首页
           </a>
         
       
         
-          <a href="/archives" class="menu purple-link">
+          <a href="/archives" class="site-nav">
             归档
           </a>
         
       
         
-          <a href="/tags" class="menu purple-link">
+          <a href="/tags" class="site-nav">
             标签
           </a>
         
       
         
-          <a href="/post/about" class="menu purple-link">
+          <a href="/post/about" class="site-nav">
             关于
           </a>
         
       
     </div>
   </div>
-</transition>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/znzcqy" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      //这是一行注释
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://znzcqy.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+<
 
 
-      <div class="content-container">
-        <div class="post-detail">
-          
-            <div class="feature-container" style="background-image: url('https://znzcqy.github.io/post-images/iT8p60rqX.jpg')">
-            </div>
-          
-          <h2 class="post-title">计算n阶行列式的值</h2>
-          <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2019-09-23</span>
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">计算n阶行列式的值</h2>
+            <div class="post-date">2019-09-23</div>
             
-          </div>
-          <div class="post-content">
-            <p>首先说明一下为啥要写这篇博客，首先，大二生活刚开始，有点空闲时间，线性代数刚学完行列式，借此机会复习一下（手动滑稽）。还有就是一位朋友说我整天净搞些花里胡哨的，不如搞点实际的，其实就是想让我写一个程序帮她计算行列式的值（我知道你是开玩笑的，但我当真了，哈哈哈哈哈嗝）。</p>
+              <div class="feature-container" style="background-image: url('https://znzcqy.github.io/post-images/iT8p60rqX.jpg')">
+              </div>
+            
+            <div class="post-content">
+              <p>首先说明一下为啥要写这篇博客，首先，大二生活刚开始，有点空闲时间，线性代数刚学完行列式，借此机会复习一下（手动滑稽）。还有就是一位朋友说我整天净搞些花里胡哨的，不如搞点实际的，其实就是想让我写一个程序帮她计算行列式的值（我知道你是开玩笑的，但我当真了，哈哈哈哈哈嗝）。</p>
 <p>好的，计算行列式的方法相信大家都会，这里使用按行（列）展开（降阶法），不要问我为啥不用定义算，因为不会……</p>
 <p>为了简化代码，这里只用第一列展开的结果，当然用任意列（行）步骤和结果都是一样的哈。那么就附上代码：</p>
 <pre><code>#include &lt;stdio.h&gt;
@@ -141,49 +156,38 @@ int main(void)
 <p>最后贴上一张图片，成功水完一篇博客<br>
 <img src="https://znzcqy.github.io/post-images/1569241435585.png" alt=""></p>
 
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://znzcqy.github.io/post/luo-gu-p1308-tong-ji-dan-ci-shu">
+                  <h3 class="post-title">
+                    洛谷P1308 统计单词数
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
           </div>
+
         </div>
-
-        
-          <div class="next-post">
-            <a class="purple-link" href="https://znzcqy.github.io/post/luo-gu-p1308-tong-ji-dan-ci-shu">
-              <h3 class="post-title">
-                下一篇：洛谷P1308 统计单词数
-              </h3>
-            </a>
-          </div>
-          
       </div>
-
-      
-        
-          <div id="gitalk-container"></div>
-        
-
-        
-      
-
-      <div class="site-footer">
-  <div class="slogan">//这是一行注释</div>
-  <div class="social-container">
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-  </div>
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://znzcqy.github.io/atom.xml" target="_blank">RSS</a>
-</div>
-
-
     </div>
-    <script type="application/javascript">
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
 
 hljs.initHighlightingOnLoad()
 
