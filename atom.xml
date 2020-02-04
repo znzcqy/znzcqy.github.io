@@ -2,14 +2,14 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://znzcqy.github.io</id>
     <title>znzcqy的博客</title>
-    <updated>2019-11-08T11:44:14.451Z</updated>
+    <updated>2020-02-04T01:50:42.412Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://znzcqy.github.io"/>
     <link rel="self" href="https://znzcqy.github.io/atom.xml"/>
     <subtitle>//这是一行注释</subtitle>
     <logo>https://znzcqy.github.io/images/avatar.png</logo>
     <icon>https://znzcqy.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2019, znzcqy的博客</rights>
+    <rights>All rights reserved 2020, znzcqy的博客</rights>
     <entry>
         <title type="html"><![CDATA[使用命令行下载网页视频（进阶版）]]></title>
         <id>https://znzcqy.github.io/post/wTokxzWiO</id>
