@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://znzcqy.github.io</id>
     <title>znzcqy的博客</title>
-    <updated>2020-04-25T04:15:05.050Z</updated>
+    <updated>2020-08-03T03:56:26.997Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://znzcqy.github.io"/>
     <link rel="self" href="https://znzcqy.github.io/atom.xml"/>
@@ -10,6 +10,13 @@
     <logo>https://znzcqy.github.io/images/avatar.png</logo>
     <icon>https://znzcqy.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, znzcqy的博客</rights>
+    <entry>
+        <title type="html"><![CDATA[基于Arduino的PID循迹小车]]></title>
+        <id>https://znzcqy.github.io/post/Nzx8AZmvk</id>
+        <link href="https://znzcqy.github.io/post/Nzx8AZmvk">
+        </link>
+        <updated>2020-08-02T23:28:00.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[国产流氓软件偷走了你多少流量]]></title>
         <id>https://znzcqy.github.io/post/UYOK0gFWJ</id>
