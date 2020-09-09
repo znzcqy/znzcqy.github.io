@@ -10,7 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://znzcqy.github.io/favicon.ico?v=1596427095621">
+<link rel="shortcut icon" href="https://znzcqy.github.io/favicon.ico?v=1599659443584">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://znzcqy.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://znzcqy.github.io">
-        <img src="https://znzcqy.github.io/images/avatar.png?v=1596427095621" class="site-logo">
+        <img src="https://znzcqy.github.io/images/avatar.png?v=1599659443584" class="site-logo">
         <h1 class="site-title">znzcqy的博客</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -120,27 +120,27 @@
             <div class="post-content">
               <p>一、实现目标<br>
 本项目使用五路循迹模块，能实现闭环赛道的简单循迹。（如下图）</p>
-<figure data-type="image" tabindex="1"><img src="https://znzcqy.github.io/post-images/1596411276932.png" alt=""></figure>
+<figure data-type="image" tabindex="1"><img src="https://znzcqy.github.io/post-images/1596411276932.png" alt="" loading="lazy"></figure>
 <p>五路循迹模块含有5个传感器，用于判断路况。赛道使用黑色胶带搭建，背景使用白色或者反射性强的，以便传感器能准确检测。</p>
-<figure data-type="image" tabindex="2"><img src="https://znzcqy.github.io/post-images/1596413004401.png" alt=""></figure>
+<figure data-type="image" tabindex="2"><img src="https://znzcqy.github.io/post-images/1596413004401.png" alt="" loading="lazy"></figure>
 <p>二、使用配件<br>
 Arduino uno R3开发板<br>
-<img src="https://znzcqy.github.io/post-images/1596420516810.png" alt=""><br>
+<img src="https://znzcqy.github.io/post-images/1596420516810.png" alt="" loading="lazy"><br>
 L298N电机驱动模块<br>
-<img src="https://znzcqy.github.io/post-images/1596420537456.png" alt=""><br>
+<img src="https://znzcqy.github.io/post-images/1596420537456.png" alt="" loading="lazy"><br>
 TCRT5000五路循迹模块<br>
-<img src="https://znzcqy.github.io/post-images/1596420614721.jpg" alt=""><br>
+<img src="https://znzcqy.github.io/post-images/1596420614721.jpg" alt="" loading="lazy"><br>
 小车模块<br>
-<img src="https://znzcqy.github.io/post-images/1596420715007.jpg" alt=""><br>
+<img src="https://znzcqy.github.io/post-images/1596420715007.jpg" alt="" loading="lazy"><br>
 杜邦线若干、六角铜柱、螺丝螺母若干<br>
 以上配件均可在某宝购买。<br>
 三、小车的安装与调试<br>
-<img src="https://znzcqy.github.io/post-images/1596424295940.png" alt=""><br>
+<img src="https://znzcqy.github.io/post-images/1596424295940.png" alt="" loading="lazy"><br>
 （本图仅供参考）<br>
 L298N电机驱动模块的连接：out1,out2,out3,out4分别连接两个马达的两端，注意正反，IN1,IN2,IN3,IN4分别连接开发板上的引脚2，4，7，8。左右两端的使能端需要拔掉键帽，再用杜邦线连接，ENA，ENB分别连接开发板上的引脚3和5。12v电源端接电源正极，5v电源端接开发板上的5v，用于给开发板供电，GND接地。<br>
 TCRT5000五路循迹模块的连接：5v电源端接开发板上的5v，GND接地。out1，2，3，4，5分别接引脚9，10，11，12，13。<br>
 连接完成<br>
-<img src="https://znzcqy.github.io/post-images/1596424964504.jpg" alt=""><br>
+<img src="https://znzcqy.github.io/post-images/1596424964504.jpg" alt="" loading="lazy"><br>
 以下是测试代码（使用Arduino IDE进行编译，烧录），可以控制小车前进，左转，右转，后退，停车。</p>
 <pre><code class="language-c++">const int IN_A1 = 2;
 const int PWM_A = 3;
@@ -227,11 +227,11 @@ const int sensor3 = 11;
 const int sensor4 = 12;
 const int sensor5 = 13;
 int sensor[5] = {0, 0, 0, 0, 0};
-float Kp = 20, Ki = 0.5, Kd = 0;
+float Kp = 10, Ki = 2, Kd = 0.05;
 float error = 0, P = 0, I = 0, D = 0, PID_value = 0;
-float previous_error = 0;
-int DIN_A1 = 100;
-int DIN_B1 = 100;
+float previous_error = 0, previous_I = 0;
+int DIN_A1 = 50;
+int DIN_B1 = 50;
 void setup() {
   Serial.begin(9600);
   pinMode(IN_A1, OUTPUT);
@@ -256,39 +256,35 @@ void loop() {
     error = 1;
   } else if (sensor[2] == 0 &amp;&amp; sensor[1] != 0 &amp;&amp; sensor[0] != 0 &amp;&amp; sensor[3] != 0 &amp;&amp; sensor[4] != 0) {
     error = 0;
+  } else if (sensor[2] == 0 &amp;&amp; sensor[1] == 0 &amp;&amp; sensor[0] != 0 &amp;&amp; sensor[3] == 0 &amp;&amp; sensor[4] != 0) {
+    error = 0;
   } else if (sensor[3] == 0 &amp;&amp; sensor[1] != 0 &amp;&amp; sensor[2] != 0 &amp;&amp; sensor[0] != 0 &amp;&amp; sensor[4] != 0) {
     error = -1;
   } else if (sensor[4] == 0 &amp;&amp; sensor[1] != 0 &amp;&amp; sensor[2] != 0 &amp;&amp; sensor[3] != 0 &amp;&amp; sensor[0] != 0) {
     error = -2;
-  }
-  else {
-    error = 0;
+  } else if (sensor[4] != 0 &amp;&amp; sensor[1] != 0 &amp;&amp; sensor[2] != 0 &amp;&amp; sensor[3] != 0 &amp;&amp; sensor[0] != 0) {
+    if (error == 2) {
+      error = 3;
+    } else {
+      error = -3;
+    }
   }
   P = error;
-  I = I + error;
+  I = I + previous_I;
   D = error - previous_error;
   PID_value = (Kp * P) + (Ki * I) + (Kd * D);
+  previous_I = I;
   previous_error = error;
-  DIN_A1  -= PID_value;
-  DIN_B1  += PID_value;
-  if (DIN_A1 &gt; 100) {
-    DIN_A1 = 100;
-  }
-  if (DIN_B1 &gt; 100) {
-    DIN_B1 = 100;
-  }
-  if (DIN_B1 &lt; 50) {
-    DIN_B1 = 50;
-  }
-  if (DIN_A1 &lt; 50) {
-    DIN_A1 = 50;
-  }
+  int left_motor_speed = DIN_A1 - PID_value;
+  int right_motor_speed = DIN_B1 + PID_value;
+  constrain(left_motor_speed, 0, 255);
+  constrain(right_motor_speed, 0, 255);
   digitalWrite(IN_A2, HIGH);
   digitalWrite(IN_B2, HIGH);
   digitalWrite(IN_A1, LOW);
   digitalWrite(IN_B1, LOW);
-  analogWrite(PWM_A, DIN_A1*2.55);
-  analogWrite(PWM_B, DIN_B1*2.55);
+  analogWrite(PWM_A, DIN_A1-PID_value);
+  analogWrite(PWM_B, DIN_B1+PID_value);
 }
 </code></pre>
 <p>烧入Arduino开发板，大功告成。</p>
@@ -298,7 +294,7 @@ void loop() {
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://znzcqy.github.io/post/UYOK0gFWJ">
+                <a href="https://znzcqy.github.io/post/UYOK0gFWJ/">
                   <h3 class="post-title">
                     国产流氓软件偷走了你多少流量
                   </h3>
