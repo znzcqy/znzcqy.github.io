@@ -759,3 +759,10 @@ a {
         margin-left: 480px;
       }
     
+      .sidebar{
+     width:280px;
+}
+.main-container{
+    margin-left:280px;
+}
+    
