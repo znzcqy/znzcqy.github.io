@@ -2,14 +2,14 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://znzcqy.github.io</id>
     <title>znzcqy的博客</title>
-    <updated>2020-10-03T13:45:30.117Z</updated>
+    <updated>2021-02-09T03:07:39.073Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://znzcqy.github.io"/>
     <link rel="self" href="https://znzcqy.github.io/atom.xml"/>
     <subtitle>//这是一行注释</subtitle>
     <logo>https://znzcqy.github.io/images/avatar.png</logo>
     <icon>https://znzcqy.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, znzcqy的博客</rights>
+    <rights>All rights reserved 2021, znzcqy的博客</rights>
     <entry>
         <title type="html"><![CDATA[基于Arduino 的PID循迹小车（改进版）]]></title>
         <id>https://znzcqy.github.io/post/I9lb3ilye/</id>
@@ -51,12 +51,5 @@
         <link href="https://znzcqy.github.io/post/iT8p60rqX/">
         </link>
         <updated>2019-09-23T12:07:12.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[洛谷P1308 统计单词数]]></title>
-        <id>https://znzcqy.github.io/post/luo-gu-p1308-tong-ji-dan-ci-shu/</id>
-        <link href="https://znzcqy.github.io/post/luo-gu-p1308-tong-ji-dan-ci-shu/">
-        </link>
-        <updated>2019-09-13T14:55:50.000Z</updated>
     </entry>
 </feed>
