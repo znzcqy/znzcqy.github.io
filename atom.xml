@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://znzcqy.github.io</id>
     <title>znzcqy的博客</title>
-    <updated>2021-02-10T02:39:40.091Z</updated>
+    <updated>2021-02-10T07:24:07.640Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://znzcqy.github.io"/>
     <link rel="self" href="https://znzcqy.github.io/atom.xml"/>
@@ -10,6 +10,13 @@
     <logo>https://znzcqy.github.io/images/avatar.png</logo>
     <icon>https://znzcqy.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, znzcqy的博客</rights>
+    <entry>
+        <title type="html"><![CDATA[笔记本电脑升级指南]]></title>
+        <id>https://znzcqy.github.io/post/poADLqJ_1/</id>
+        <link href="https://znzcqy.github.io/post/poADLqJ_1/">
+        </link>
+        <updated>2021-02-10T00:48:26.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[基于Arduino 的PID循迹小车（改进版）]]></title>
         <id>https://znzcqy.github.io/post/I9lb3ilye/</id>
