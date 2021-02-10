@@ -765,4 +765,10 @@ a {
 .main-container{
     margin-left:320px;
 }
+.sidebar .top-container .site-nav {
+color:#ffccff;
+}
+.sidebar .top-container .site-nav:hover {
+color:#ffccff;
+}
     
