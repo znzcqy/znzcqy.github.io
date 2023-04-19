@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://znzcqy.github.io</id>
+    <title>znzcqy的博客</title>
+    <updated>2023-04-19T11:02:38.088Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://znzcqy.github.io"/>
+    <link rel="self" href="https://znzcqy.github.io/atom.xml"/>
+    <subtitle>//这是一行注释</subtitle>
+    <logo>https://znzcqy.github.io/images/avatar.png</logo>
+    <icon>https://znzcqy.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2023, znzcqy的博客</rights>
+    <entry>
+        <title type="html"><![CDATA[《Planetes》开头的摩斯电码到底是什么意思？]]></title>
+        <id>https://znzcqy.github.io/post/B67PFkatF/</id>
+        <link href="https://znzcqy.github.io/post/B67PFkatF/">
+        </link>
+        <updated>2023-01-04T08:02:53.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[笔记本电脑升级指南]]></title>
+        <id>https://znzcqy.github.io/post/poADLqJ_1/</id>
+        <link href="https://znzcqy.github.io/post/poADLqJ_1/">
+        </link>
+        <updated>2021-02-10T00:48:26.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[基于Arduino的PID循迹小车（改进版）]]></title>
+        <id>https://znzcqy.github.io/post/I9lb3ilye/</id>
+        <link href="https://znzcqy.github.io/post/I9lb3ilye/">
+        </link>
+        <updated>2020-09-25T11:39:02.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[基于Arduino的PID循迹小车]]></title>
+        <id>https://znzcqy.github.io/post/Nzx8AZmvk/</id>
+        <link href="https://znzcqy.github.io/post/Nzx8AZmvk/">
+        </link>
+        <updated>2020-08-02T23:28:00.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[国产流氓软件偷走了你多少流量]]></title>
+        <id>https://znzcqy.github.io/post/UYOK0gFWJ/</id>
+        <link href="https://znzcqy.github.io/post/UYOK0gFWJ/">
+        </link>
+        <updated>2020-04-24T11:33:47.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[使用命令行下载网页视频（进阶版）]]></title>
+        <id>https://znzcqy.github.io/post/wTokxzWiO/</id>
+        <link href="https://znzcqy.github.io/post/wTokxzWiO/">
+        </link>
+        <updated>2019-11-08T10:31:55.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[如何利用you-get包下载网页上的视频]]></title>
+        <id>https://znzcqy.github.io/post/utdZBq2Gb/</id>
+        <link href="https://znzcqy.github.io/post/utdZBq2Gb/">
+        </link>
+        <updated>2019-10-26T11:00:18.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[计算n阶行列式的值]]></title>
+        <id>https://znzcqy.github.io/post/iT8p60rqX/</id>
+        <link href="https://znzcqy.github.io/post/iT8p60rqX/">
+        </link>
+        <updated>2019-09-23T12:07:12.000Z</updated>
+    </entry>
+</feed>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>基于Arduino的PID循迹小车（改进版） | znzcqy的博客</title>
+<meta name="description" content="//这是一行注释">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://znzcqy.github.io/favicon.ico?v=1681902154492">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://znzcqy.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+    <div id="jnkc" style="z-index:2;padding-left: 16px;color: #ffccff;">时间加载中- ( ゜- ゜)つ口...
+        <script>
+            document.write("")
+            setInterval("jnkc.innerHTML= '现在是：'+new Date().toLocaleString()+' 星期'+'日一二三四五六'.charAt(new Date().getDay());", 1000);
+        </script>
+    </div>
+    <script src="https://znzcqy.github.io/live2d-widget/autoload.js"></script>
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://znzcqy.github.io">
+        <img src="https://znzcqy.github.io/images/avatar.png?v=1681902154492" class="site-logo">
+        <h1 class="site-title">znzcqy的博客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://znzcqy.github.io" class="site-nav">
+            主页
+          </a>
+        
+      
+        
+          <a href="https://znzcqy.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://znzcqy.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://znzcqy.github.io/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/znzcqy" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      //这是一行注释
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://znzcqy.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">基于Arduino的PID循迹小车（改进版）</h2>
+            <div class="post-date">2020-09-25</div>
+            
+            <div class="post-content">
+              <p>上次我们打造了一辆基于Arduino的循迹小车，并且加入了PID算法。<br>
+<a href="https://znzcqy.github.io/post/Nzx8AZmvk/">https://znzcqy.github.io/post/Nzx8AZmvk/</a></p>
+<p>但是小车的表现却不尽如人意，于是我对代码进行了改进，并且不再使用L298N电机的ENA,ENB使能端，对线路进行了简化，直接采用Arduino的带PMW的引脚来对小车进行速度控制。电池方面，换成可充电的锂电池（3.7V X3），以保证小车的速度。在上次的赛道中，赛道总长度大约为5.14m，要实现在7s内跑完全程的目标，就必须要更高的速度。</p>
+<p><img src="https://znzcqy.github.io/post-images/1601732673739.jpg" alt="" loading="lazy"><br>
+推荐使用正版arduino开发板</p>
+<p>下面是改进后的代码</p>
+<pre><code class="language-c++">#define righA_PIN 5
+#define righB_PIN 3
+#define leftA_PIN 10
+#define leftB_PIN 9
+#define leftA_track_PIN 2
+#define leftB_track_PIN 4
+#define middle_track_PIN 6
+#define righA_track_PIN 7
+#define righB_track_PIN 8
+float Kp = 15 , Ki = 0, Kd = 200;                   //pid弯道参数参数
+float error = 0, P = 0, I = 0, D = 0, PID_value = 0;//pid直道参数
+float previous_error = 0, previous_I = 0;           //误差值
+int sensor[5] = {0, 0, 0, 0, 0};                    //
+//5个传感器数值的数组
+static int initial_motor_speed = 200;                //初始速度
+void read_sensor_values(void);                      //读取初值
+void calc_pid(void);                                //计算pid
+void motor_control(void);                           //电机控制
+void motor_pinint( );     //引脚初始化
+void setup()
+{
+  Serial.begin(9600); //串口波特率115200（PC端使用）
+  track_pinint( );     //循迹引脚初始化
+  motor_pinint();        //电机引脚初始化
+}
+void loop()
+{
+  read_sensor_values();         //循迹小车
+  calc_pid();
+  motor_control();
+}
+/*循迹模块引脚初始化*/
+void track_pinint( )
+{
+  pinMode (leftA_track_PIN, INPUT); //设置引脚为输入引脚
+  pinMode (leftB_track_PIN, INPUT); //设置引脚为输入引脚
+  pinMode (middle_track_PIN, INPUT);//设置引脚为输入引脚
+  pinMode (righA_track_PIN, INPUT); //设置引脚为输入引脚
+  pinMode (righB_track_PIN, INPUT); //设置引脚为输入引脚
+}
+
+void motor_pinint( )
+{
+  pinMode (leftA_PIN, OUTPUT); //设置引脚为输出引脚
+  pinMode (leftB_PIN, OUTPUT); //设置引脚为输出引脚
+  pinMode (righA_PIN, OUTPUT); //设置引脚为输出引脚
+  pinMode (righB_PIN, OUTPUT); //设置引脚为输出引脚
+}
+//速度设定范围(-255,255)
+void motorsWrite(int speedL, int speedR)
+{
+  if (speedL &gt; 0) {
+    analogWrite(leftA_PIN, speedL);
+    analogWrite(leftB_PIN, 0);
+  } else {
+    analogWrite(leftA_PIN, 0);
+    analogWrite(leftB_PIN, -speedL);
+  }
+  if (speedR &gt; 0) {
+    analogWrite(righA_PIN, speedR);
+    analogWrite(righB_PIN, 0);
+  } else {
+    analogWrite(righA_PIN, 0);
+    analogWrite(righB_PIN, -speedR);
+  }
+}
+
+void read_sensor_values()
+{
+  sensor[0] = digitalRead(leftA_track_PIN);
+  sensor[1] = digitalRead(leftB_track_PIN);
+  sensor[2] = digitalRead(middle_track_PIN);
+  sensor[3] = digitalRead(righA_track_PIN);
+  sensor[4] = digitalRead(righB_track_PIN);
+  if (sensor[0] == 0 &amp;&amp; sensor[1] != 0 &amp;&amp; sensor[2] != 0 &amp;&amp; sensor[3] != 0 &amp;&amp; sensor[4] != 0) {
+    error = -4;//01111
+  } else if (sensor[0] == 0 &amp;&amp; sensor[1] == 0 &amp;&amp; sensor[2] != 0 &amp;&amp; sensor[3] != 0 &amp;&amp; sensor[4] != 0) {
+    error = -3;//00111
+  } else if (sensor[1] == 0 &amp;&amp; sensor[0] != 0 &amp;&amp; sensor[2] != 0 &amp;&amp; sensor[3] != 0 &amp;&amp; sensor[4] != 0) {
+    error = -2;//10111
+  } else if (sensor[1] == 0 &amp;&amp; sensor[0] != 0 &amp;&amp; sensor[2] == 0 &amp;&amp; sensor[3] != 0 &amp;&amp; sensor[4] != 0) {
+    error = -1;//10011
+  } else if (sensor[2] == 0 &amp;&amp; sensor[1] != 0 &amp;&amp; sensor[0] != 0 &amp;&amp; sensor[3] != 0 &amp;&amp; sensor[4] != 0) {
+    error = 0;//11011
+  } else if (sensor[3] == 0 &amp;&amp; sensor[1] != 0 &amp;&amp; sensor[2] == 0 &amp;&amp; sensor[0] != 0 &amp;&amp; sensor[4] != 0) {
+    error = 1;//11001
+  } else if (sensor[3] == 0 &amp;&amp; sensor[1] != 0 &amp;&amp; sensor[2] != 0 &amp;&amp; sensor[0] != 0 &amp;&amp; sensor[4] != 0) {
+    error = 2;//11101
+  } else if (sensor[4] == 0 &amp;&amp; sensor[1] != 0 &amp;&amp; sensor[2] != 0 &amp;&amp; sensor[3] == 0 &amp;&amp; sensor[0] != 0) {
+    error = 3;//11100
+  } else if (sensor[4] == 0 &amp;&amp; sensor[1] != 0 &amp;&amp; sensor[2] != 0 &amp;&amp; sensor[3] != 0 &amp;&amp; sensor[0] != 0) {
+    error = 4;//11110
+  } else if (sensor[0] != 0 &amp;&amp; sensor[1] != 0 &amp;&amp; sensor[2] != 0 &amp;&amp; sensor[3] != 0 &amp;&amp; sensor[4] != 0) {
+    error = 0;//11111
+  }
+}
+void calc_pid()
+{
+  P = error;
+  I = I + error;
+  D = error - previous_error;
+  PID_value = (Kp * P) + (Ki * I) + (Kd * D);
+  previous_error = error;
+}
+void motor_control()
+{
+  int left_motor_speed ;
+  int right_motor_speed ;
+  left_motor_speed = initial_motor_speed + PID_value;
+  right_motor_speed = initial_motor_speed - PID_value;
+  if (left_motor_speed &lt; -255) {
+    left_motor_speed = -255;
+  }
+  if (left_motor_speed &gt; 255) {
+    left_motor_speed = 255;
+  }
+  if (right_motor_speed &lt; -255) {
+    right_motor_speed = -255;
+  }
+  if (right_motor_speed &gt; 255) {
+    right_motor_speed = 255;
+  }
+  motorsWrite(left_motor_speed, right_motor_speed);
+}
+
+</code></pre>
+<p>最后再说明一下，PID参数需要自己调节，通常先把速度调到50，Ki,Kd先赋值为0，调节Kp，直到能循迹了，再把速度调大，调节Kd即可，Ki是积分常数，一般为0，如果小车不稳定，可以适当赋值。实测小车速度赋值为200时，跑完一圈大概5s。这时我们可以适当把速度再调高，挑战速度的极限，通常需要更换摩擦力更大的赛道地面。</p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://znzcqy.github.io/post/Nzx8AZmvk/">
+                  <h3 class="post-title">
+                    基于Arduino的PID循迹小车
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'f01f329db44c899f3d61',
+        clientSecret: '463837c602f08727d3e9692202a0d080f6617dbb',
+        repo: 'znzcqy.github.io',
+        owner: 'znzcqy',
+        admin: ['znzcqy'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

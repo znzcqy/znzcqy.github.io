@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>基于Arduino的PID循迹小车 | znzcqy的博客</title>
+<meta name="description" content="//这是一行注释">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://znzcqy.github.io/favicon.ico?v=1681902154492">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://znzcqy.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+    <div id="jnkc" style="z-index:2;padding-left: 16px;color: #ffccff;">时间加载中- ( ゜- ゜)つ口...
+        <script>
+            document.write("")
+            setInterval("jnkc.innerHTML= '现在是：'+new Date().toLocaleString()+' 星期'+'日一二三四五六'.charAt(new Date().getDay());", 1000);
+        </script>
+    </div>
+    <script src="https://znzcqy.github.io/live2d-widget/autoload.js"></script>
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://znzcqy.github.io">
+        <img src="https://znzcqy.github.io/images/avatar.png?v=1681902154492" class="site-logo">
+        <h1 class="site-title">znzcqy的博客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://znzcqy.github.io" class="site-nav">
+            主页
+          </a>
+        
+      
+        
+          <a href="https://znzcqy.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://znzcqy.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://znzcqy.github.io/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/znzcqy" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      //这是一行注释
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://znzcqy.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">基于Arduino的PID循迹小车</h2>
+            <div class="post-date">2020-08-03</div>
+            
+              <div class="feature-container" style="background-image: url('https://znzcqy.github.io/post-images/Nzx8AZmvk.png')">
+              </div>
+            
+            <div class="post-content">
+              <p>一、实现目标<br>
+本项目使用五路循迹模块，能实现闭环赛道的简单循迹。（如下图）</p>
+<figure data-type="image" tabindex="1"><img src="https://znzcqy.github.io/post-images/1596411276932.png" alt="" loading="lazy"></figure>
+<p>五路循迹模块含有5个传感器，用于判断路况。赛道使用黑色胶带搭建，背景使用白色或者反射性强的，以便传感器能准确检测。</p>
+<figure data-type="image" tabindex="2"><img src="https://znzcqy.github.io/post-images/1599998195817.png" alt="" loading="lazy"></figure>
+<p>二、使用配件<br>
+Arduino uno R3开发板<br>
+<img src="https://znzcqy.github.io/post-images/1600330712343.jpg" alt="" loading="lazy"><br>
+L298N电机驱动模块<br>
+<img src="https://znzcqy.github.io/post-images/1596420537456.png" alt="" loading="lazy"><br>
+TCRT5000五路循迹模块<br>
+<img src="https://znzcqy.github.io/post-images/1596420614721.jpg" alt="" loading="lazy"><br>
+小车模块<br>
+<img src="https://znzcqy.github.io/post-images/1600330598913.png" alt="" loading="lazy"><br>
+杜邦线若干、六角铜柱、螺丝螺母若干<br>
+以上配件均可在某宝购买。<br>
+三、小车的安装与调试<br>
+<img src="https://znzcqy.github.io/post-images/1596424295940.png" alt="" loading="lazy"><br>
+（本图仅供参考）<br>
+L298N电机驱动模块的连接：out1,out2,out3,out4分别连接两个马达的两端，注意正反，IN1,IN2,IN3,IN4分别连接开发板上的引脚2，4，7，8。左右两端的使能端需要拔掉键帽，再用杜邦线连接，ENA，ENB分别连接开发板上的引脚3和5。12v电源端接电源正极，5v电源端接开发板上的5v，用于给开发板供电，GND接地。<br>
+TCRT5000五路循迹模块的连接：5v电源端接开发板上的5v，GND接地。out1，2，3，4，5分别接引脚9，10，11，12，13。<br>
+连接完成<br>
+<img src="https://znzcqy.github.io/post-images/1596424964504.jpg" alt="" loading="lazy"><br>
+以下是测试代码（使用Arduino IDE进行编译，烧录），可以控制小车前进，左转，右转，后退，停车。</p>
+<pre><code class="language-c++">const int IN_A1 = 2;
+const int PWM_A = 3;
+const int IN_A2 = 4;
+const int PWM_B = 5;
+const int IN_B1 = 7;
+const int IN_B2 = 8;
+void setup() {
+  pinMode(IN_A1, OUTPUT);
+  pinMode(IN_A2, OUTPUT);
+  pinMode(IN_B1, OUTPUT);
+  pinMode(IN_B2, OUTPUT);
+}
+void moveLeft(void)
+{
+  digitalWrite(IN_A1, LOW);
+  digitalWrite(IN_B1, HIGH);
+  digitalWrite(IN_A2, LOW);
+  digitalWrite(IN_B2, LOW);
+  analogWrite(PWM_A, 255);
+  analogWrite(PWM_B, 255);
+}
+void moveRight(void)
+{
+  digitalWrite(IN_A1, HIGH);
+  digitalWrite(IN_B1, LOW);
+  digitalWrite(IN_A2, LOW);
+  digitalWrite(IN_B2, LOW);
+  analogWrite(PWM_A, 255);
+  analogWrite(PWM_B, 255);
+}
+void moveForward(void)
+{
+  digitalWrite(IN_A1, HIGH);
+  digitalWrite(IN_B1, HIGH);
+  digitalWrite(IN_A2, LOW);
+  digitalWrite(IN_B2, LOW);
+  analogWrite(PWM_A, 255);
+  analogWrite(PWM_B, 255);
+}
+void moveBackward(void)
+{
+  digitalWrite(IN_A1, LOW);
+  digitalWrite(IN_B1, LOW);
+  digitalWrite(IN_A2, HIGH);
+  digitalWrite(IN_B2, HIGH);
+  analogWrite(PWM_A, 255);
+  analogWrite(PWM_B, 255);
+}
+void stopCar(void)
+{
+  digitalWrite(IN_A1, LOW);
+  digitalWrite(IN_B1, LOW);
+  digitalWrite(IN_A2, LOW);
+  digitalWrite(IN_B2, LOW);
+  analogWrite(PWM_A, 255);
+  analogWrite(PWM_B, 255);
+}
+void loop() {
+  moveForward();
+  delay(3000);
+  moveLeft();
+  delay(3000);
+  moveRight();
+  delay(3000);
+  moveBackward();
+  delay(3000);
+  stopCar();
+  delay(3000);
+}
+</code></pre>
+<p>测试电机没问题后，还要对循迹模块进行测试，用六角铜柱连接以保证离地间距，在比较光洁的地面上，5个灯应该是全亮的状态。然后用手或者黑色胶带放到每个模块下，观察灯是否熄灭，逐一测试，没问题后可以进行下一步。（注意：灯亮代表1，灯灭代表0）<br>
+四、循迹<br>
+搭建好赛道，就可以放上小车进行循迹了。下面是代码：</p>
+<pre><code class="language-c++">const int IN_A1 = 2;
+const int PWM_A = 3;
+const int IN_A2 = 4;
+const int PWM_B = 5;
+const int IN_B1 = 7;
+const int IN_B2 = 8;
+const int sensor1 = 9;
+const int sensor2 = 10;
+const int sensor3 = 11;
+const int sensor4 = 12;
+const int sensor5 = 13;
+int sensor[5] = {0, 0, 0, 0, 0};
+float Kp = 30, Ki = 10, Kd = 1;
+float error = 0, P = 0, I = 0, D = 0, PID_value = 0;
+float previous_error = 0, previous_I = 0;
+int DIN_A1 = 100;
+int DIN_B1 = 100;
+void setup() {
+  Serial.begin(9600);
+  pinMode(IN_A1, OUTPUT);
+  pinMode(IN_A2, OUTPUT);
+  pinMode(IN_B1, OUTPUT);
+  pinMode(IN_B2, OUTPUT);
+  pinMode(sensor1, INPUT);
+  pinMode(sensor2, INPUT);
+  pinMode(sensor3, INPUT);
+  pinMode(sensor4, INPUT);
+  pinMode(sensor5, INPUT);
+}
+void loop() {
+  sensor[0] = digitalRead(sensor1);
+  sensor[1] = digitalRead(sensor2);
+  sensor[2] = digitalRead(sensor3);
+  sensor[3] = digitalRead(sensor4);
+  sensor[4] = digitalRead(sensor5);
+  if (sensor[0] == 0 &amp;&amp; sensor[1] != 0 &amp;&amp; sensor[2] != 0 &amp;&amp; sensor[3] != 0 &amp;&amp; sensor[4] != 0) {
+    error = -2;
+  } else if (sensor[0] == 0 &amp;&amp; sensor[1] == 0 &amp;&amp; sensor[2] != 0 &amp;&amp; sensor[3] != 0 &amp;&amp; sensor[4] != 0) {
+    error = -2;
+  } else if (sensor[1] == 0 &amp;&amp; sensor[0] != 0 &amp;&amp; sensor[2] != 0 &amp;&amp; sensor[3] != 0 &amp;&amp; sensor[4] != 0) {
+    error = -1;
+  } else if (sensor[1] == 0 &amp;&amp; sensor[0] != 0 &amp;&amp; sensor[2] == 0 &amp;&amp; sensor[3] != 0 &amp;&amp; sensor[4] != 0) {
+    error = -1;
+  } else if (sensor[2] == 0 &amp;&amp; sensor[1] != 0 &amp;&amp; sensor[0] != 0 &amp;&amp; sensor[3] != 0 &amp;&amp; sensor[4] != 0) {
+    error = 0;
+  } else if (sensor[2] == 0 &amp;&amp; sensor[1] == 0 &amp;&amp; sensor[0] != 0 &amp;&amp; sensor[3] == 0 &amp;&amp; sensor[4] != 0) {
+    error = 0;
+  } else if (sensor[3] == 0 &amp;&amp; sensor[1] != 0 &amp;&amp; sensor[2] != 0 &amp;&amp; sensor[0] != 0 &amp;&amp; sensor[4] != 0) {
+    error = 1;
+  } else if (sensor[3] == 0 &amp;&amp; sensor[1] != 0 &amp;&amp; sensor[2] == 0 &amp;&amp; sensor[0] != 0 &amp;&amp; sensor[4] != 0) {
+    error = 1;
+  } else if (sensor[4] == 0 &amp;&amp; sensor[1] != 0 &amp;&amp; sensor[2] != 0 &amp;&amp; sensor[3] == 0 &amp;&amp; sensor[0] != 0) {
+    error = 2;
+  } else if (sensor[4] == 0 &amp;&amp; sensor[1] != 0 &amp;&amp; sensor[2] != 0 &amp;&amp; sensor[3] != 0 &amp;&amp; sensor[0] != 0) {
+    error = 2;
+  } else {
+    error = 0;
+  }
+  P = error;
+  I = I + previous_I;
+  D = error - previous_error;
+  PID_value = (Kp * P) + (Ki * I) + (Kd * D);
+  previous_I = I;
+  previous_error = error;
+  int left_motor_speed = DIN_A1 - PID_value;
+  int right_motor_speed = DIN_B1 + PID_value;
+  constrain(left_motor_speed, 0, 255);
+  constrain(right_motor_speed, 0, 255);
+  digitalWrite(IN_A2, HIGH);
+  digitalWrite(IN_B2, HIGH);
+  digitalWrite(IN_A1, LOW);
+  digitalWrite(IN_B1, LOW);
+  analogWrite(PWM_A, DIN_A1 - PID_value);
+  analogWrite(PWM_B, DIN_B1 + PID_value);
+}
+</code></pre>
+<p>烧入Arduino开发板，大功告成。</p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://znzcqy.github.io/post/UYOK0gFWJ/">
+                  <h3 class="post-title">
+                    国产流氓软件偷走了你多少流量
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'f01f329db44c899f3d61',
+        clientSecret: '463837c602f08727d3e9692202a0d080f6617dbb',
+        repo: 'znzcqy.github.io',
+        owner: 'znzcqy',
+        admin: ['znzcqy'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>计算n阶行列式的值 | znzcqy的博客</title>
+<meta name="description" content="//这是一行注释">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://znzcqy.github.io/favicon.ico?v=1681902154492">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://znzcqy.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+    <div id="jnkc" style="z-index:2;padding-left: 16px;color: #ffccff;">时间加载中- ( ゜- ゜)つ口...
+        <script>
+            document.write("")
+            setInterval("jnkc.innerHTML= '现在是：'+new Date().toLocaleString()+' 星期'+'日一二三四五六'.charAt(new Date().getDay());", 1000);
+        </script>
+    </div>
+    <script src="https://znzcqy.github.io/live2d-widget/autoload.js"></script>
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://znzcqy.github.io">
+        <img src="https://znzcqy.github.io/images/avatar.png?v=1681902154492" class="site-logo">
+        <h1 class="site-title">znzcqy的博客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://znzcqy.github.io" class="site-nav">
+            主页
+          </a>
+        
+      
+        
+          <a href="https://znzcqy.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://znzcqy.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://znzcqy.github.io/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/znzcqy" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      //这是一行注释
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://znzcqy.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">计算n阶行列式的值</h2>
+            <div class="post-date">2019-09-23</div>
+            
+              <div class="feature-container" style="background-image: url('https://znzcqy.github.io/post-images/iT8p60rqX.png')">
+              </div>
+            
+            <div class="post-content">
+              <p>写在前面，大二生活刚开始，有点空闲时间，线性代数刚学完行列式，借此机会复习一下（手动滑稽）。</p>
+<p>好的，计算行列式的方法相信大家都会，这里使用按行（列）展开（降阶法），不要问我为啥不用定义算，因为不会……</p>
+<p>为了简化代码，这里只用第一列展开的结果，当然用任意列（行）步骤和结果都是一样的哈。那么就附上代码：</p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;math.h&gt;
+#define N 10
+int Det(int n, int a[N][N])//Det为行列式的简称，函数的作用是计算n阶行列式的值
+{
+  int b[N][N]={0},i,j,k,sign=0,cnt=0;//定义二维数组b，用来存放行列式的每一个元素；sign用来判断移动方向，cnt用来计算行列式的值
+  if(n==1)
+    return a[0][0];
+  for(i=0;i&lt;n;i++)//将第一列元素的余子式存入二维数组b中
+  {
+    for(k=0;k&lt;n-1;k++)
+    {
+        for(j=0;j&lt;n-1;j++)
+        {
+          if (k&lt;i)//a[k][j]位于第i行的上方，只需将a[k][j]中的元素依次右移
+              sign=0;
+          else //a[k][j]位于第i行或其下方，则需进行右移和下移
+              sign=1;
+          b[k][j]=a[k+sign][j+1];//执行移动操作，实现余子式的存储
+        }
+    }
+    cnt+=a[i][0]*Det(n-1,b)*pow(-1,i);//余子式的系数为-1的i+j次方，而j=0；使用递归，将第一列元素的代数余子式之和存入cnt，cnt的值即为行列式的值
+  }
+  return cnt;//函数的返回值cnt即为n阶行列式的值
+}
+int main(void)
+{
+  int i,j,n=0,a[N][N]={0}; 
+  scanf(&quot;%d&quot;,&amp;n);
+  while(n&gt;0)//n的值必须大于0
+  {
+    for(i=0;i&lt;n;i++)
+      for(j=0;j&lt;n;j++)
+        scanf(&quot;%d&quot;,&amp;a[i][j]);//读入行列式
+    printf(&quot;%d\n&quot;,Det(n,a));//输出行列式的值
+    scanf(&quot;%d&quot;,&amp;n);//可以连续计算多个行列式的值，直到n&lt;=0时结束程序
+  }
+}
+</code></pre>
+<p>最后贴上一张图片，成功水完一篇博客<br>
+<img src="https://znzcqy.github.io/post-images/1569241435585.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'f01f329db44c899f3d61',
+        clientSecret: '463837c602f08727d3e9692202a0d080f6617dbb',
+        repo: 'znzcqy.github.io',
+        owner: 'znzcqy',
+        admin: ['znzcqy'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
